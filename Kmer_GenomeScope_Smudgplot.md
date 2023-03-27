@@ -16,11 +16,20 @@ sed -i 's/\s\+/\n/g' FILES_${name}
 /cluster/project/gdc/shared/tools/KMC_June2021/bin/kmc_tools transform kmc/${name} histogram ${out}/${name}_k19.hist -cx10000
 
 awk -v OFS=' ' '{ print $1, $2 }' ${out}/${name}_k19.hist > ${out}/${name}_k19_sp.hist
-``
+```
+
 
 # Genome Scope
 Genome scope was used to estiamte the heteroyzgosity using kmers
 https://github.com/schatzlab/genomescope
 
+```
+while read p; do 
+Rscript ~/bin/genomescope.R ./kmc_hist/${p} 19 150 ./gscope_out/tmp/
+mv ./gscope_out/tmp/plot.png ./gscope_out/${p}.png 
+mv ./gscope_out/tmp/summary.txt ./gscope_out/${p}.summary
 
+done<hist_file.list
+
+```
 
