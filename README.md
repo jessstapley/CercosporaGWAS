@@ -1,2 +1,2 @@
 # Cercospora beticola GWAS
-Respository of methods for GWAS in Cercospora beticola
+Respository of methods for GWAS in Cercospora beticola.
