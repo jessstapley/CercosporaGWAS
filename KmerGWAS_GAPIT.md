@@ -1,7 +1,7 @@
-# Kmer GWAS
-Kmers were counted with KMC following recomendations from (https://github.com/voichek/kmersGWAS). Using these kmer counts we then performed the GWAS in R with Gapit (https://github.com/jiabowang/GAPIT)
+# K-mer GWAS
+Kmers were counted with KMC following recomendations from (https://github.com/voichek/kmersGWAS). Using these kmer counts I performed the GWAS in R with Gapit (https://github.com/jiabowang/GAPIT)
 
-# Counting kmers with KMC
+# Counting k-mers with KMC
 
 ```
 IDX=$LSB_JOBINDEX
@@ -19,15 +19,31 @@ rm ${name}/*.kmc*
 #rm FILES_${name}
 
 ```
+# K-mer data converted to plink file 
+Converted k-mer data into a plink file coding k-mers presence/absence as two homozygous variants and removing k-mers with a minor frequency of less than 0.05
 
+```
+/bin/kmers_table_to_bed -t kmers_table -k 31 -p phenotypes.pheno --maf 0.05 --mac 5 -b 10000000 -o output_file
+```
+
+The k-mer plink(.bed) output was imported into plink (v1.9, https://www.cog-genomics.org/plink/) and converted to a vcf file using `--recode vcf`
+
+  
 # GWAS with R and GAPIT
 
-The kmer output was imported into plink (v1.9, https://www.cog-genomics.org/plink/)and converted to a vcf file.
+The vcf file was split into 99 smaller files, then converted to hapmap file using R::vcfR (https://github.com/knausb/vcfR) and then GAPIT GWAS was run on each of these smaller files.
+
+To split the vcf file, first the header was removed and saved to another file, then the file was split into smaller files contiaing 20,000 k-mers. 
+
+```
+head -7 kmer.vcf > header.vcf
+sed 1,7d kmer.vcf > vcf_noheader.txt
+split -d -l 200000 vcf_noheader.txt sub && for X in sub*; do { cat header.vcf "$X"; } > split_files/$X.txt; done
+
+```
 
 
-
-Convert vcf to hapmap using R::vcfR
-https://github.com/knausb/vcfR
+Then all Convert vcf to hapmap 
 
 ```
 vcf_file <-  "kmer.vcf"
@@ -39,4 +55,7 @@ write.table(myHapMap, file = "kmer.hmp.txt", sep = "\t", row.names = FALSE, col.
 ```
 
 
-# Mapping kmers to reference genome
+
+
+
+# Mapping k-mers to reference genome
