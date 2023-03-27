@@ -20,7 +20,7 @@ awk -v OFS=' ' '{ print $1, $2 }' ${out}/${name}_k19.hist > ${out}/${name}_k19_s
 
 
 # Genome Scope
-Genome scope was used to estimate the heteroyzgosity using kmers
+Genome scope was used to estimate the heterozygosity using kmers
 https://github.com/schatzlab/genomescope
 
 ```
