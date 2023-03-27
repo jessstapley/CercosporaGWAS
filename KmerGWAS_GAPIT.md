@@ -1,0 +1,42 @@
+# Kmer GWAS
+Kmers were counted with KMC following recomendations from (https://github.com/voichek/kmersGWAS). Using these kmer counts we then performed the GWAS in R with Gapit (https://github.com/jiabowang/GAPIT)
+
+# Counting kmers with KMC
+
+```
+IDX=$LSB_JOBINDEX
+name=`sed -n ${IDX}p <read.list`
+mkdir ${name}
+cd ${name}
+printf '%s\n' ${data}/${name}.R1.trim.fq.gz  ${data}/${name}.R2.trim.fq.gz > FILES_${name} 
+sed -i 's/\s\+/\n/g' FILES_${name} 
+
+[path]/tools/KMC_June2021/bin/kmc -k31 -t16 -m64 -ci2 -cs10000 @FILES_${name}  output_kmc_cannon ./ 1> kmc_cannon.1 2> kmc_cannon.2 
+[path]/KMC_June2021/bin/kmc -k31 -t16 -m64 -ci0 -cs10000 @FILES_${name}  output_kmc_all ./ 1> kmc_all.1 2> kmc_all.2 
+[path]/kmerGWAS/bin/kmers_add_strand_information -c output_kmc_canon -n output_kmc_all -k 31 -o kmers_with_strand 1> kmc_strand.1 
+
+rm ${name}/*.kmc*
+#rm FILES_${name}
+
+```
+
+# GWAS with R and GAPIT
+
+The kmer output was imported into plink (v1.9, https://www.cog-genomics.org/plink/)and converted to a vcf file.
+
+
+
+Convert vcf to hapmap using R::vcfR
+https://github.com/knausb/vcfR
+
+```
+vcf_file <-  "kmer.vcf"
+
+vcf <- read.vcfR(vcf_file, verbose = FALSE)
+myHapMap <- vcfR2hapmap(vcf)
+write.table(myHapMap, file = "kmer.hmp.txt", sep = "\t", row.names = FALSE, col.names = FALSE) 
+
+```
+
+
+# Mapping kmers to reference genome
