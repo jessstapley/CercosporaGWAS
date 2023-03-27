@@ -20,7 +20,7 @@ awk -v OFS=' ' '{ print $1, $2 }' ${out}/${name}_k19.hist > ${out}/${name}_k19_s
 
 
 # Genome Scope
-Genome scope was used to estiamte the heteroyzgosity using kmers
+Genome scope was used to estimate the heteroyzgosity using kmers
 https://github.com/schatzlab/genomescope
 
 ```
@@ -31,5 +31,16 @@ mv ./gscope_out/tmp/summary.txt ./gscope_out/${p}.summary
 
 done<hist_file.list
 
+```
+
+# Smudgeplot
+Smudgeplot was used to visualise the ploidy, estiamte genome size and coverage. 
+
+```
+while read p; do 
+L=$(smudgeplot.py cutoff ${data}/${p}_k19_sp.hist L)
+U=$(smudgeplot.py cutoff ${data}/${p}_k19_sp.hist U)
+smudgeplot.py plot ${out}/${p}_L"$L"_U"$U"_coverages.tsv -o ${out}/${p}
+done<kmc_file.list
 ```
 
