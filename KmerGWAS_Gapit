@@ -23,6 +23,25 @@ rm ${name}/*.kmc*
 
 # GWAS with R and GAPIT
 
+The kmer output was imported into plink (v1.9, https://www.cog-genomics.org/plink/)and converted to a vcf file.
+
+
+
+Convert vcf to hapmap using R::vcfR
+https://github.com/knausb/vcfR
+
+```
+vcf_file <-  "kmer.vcf"
+
+vcf <- read.vcfR(vcf_file, verbose = FALSE)
+myHapMap <- vcfR2hapmap(vcf)
+write.table(myHapMap, file = "kmer.hmp.txt", sep = "\t", row.names = FALSE, col.names = FALSE) 
+
+```
+
+
+# Mapping kmers to reference genome
+
 
 
 
