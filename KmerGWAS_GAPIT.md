@@ -33,7 +33,7 @@ The k-mer plink(.bed) output was imported into plink (v1.9, https://www.cog-geno
 
 The vcf file was split into 99 smaller files, then converted to hapmap file using R::vcfR (https://github.com/knausb/vcfR) and then GAPIT GWAS was run on each of these smaller files.
 
-To split the vcf file, first the header was removed and saved to another file, then the file was split into smaller files contiaing 20,000 k-mers. 
+To split the vcf file, first the header was removed and saved to another file, then the file was split into smaller files contiaing 20,000 k-mers and the header was attached to each of these smaller files.
 
 ```
 head -7 kmer.vcf > header.vcf
