@@ -56,7 +56,7 @@ write.table(myHapMap, file = "kmer.hmp.txt", sep = "\t", row.names = FALSE, col.
 
 # Mapping k-mers to reference genome
 
-Bowtie2(v2.3.2) was used to map k-mers to the reference genome.
+Bowtie2 (v2.3.2) was used to map k-mers to the reference genome.
 ```
 bowtie2 -r -D 24 -R 3 -N 0 -L 18 -i S,1,0.30 -x kmerGWAS.resuts
 ```
