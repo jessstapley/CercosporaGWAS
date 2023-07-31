@@ -34,7 +34,7 @@ done<hist_file.list
 ```
 
 # Smudgeplot
-Smudgeplot was used to visualise the ploidy, estiamte genome size and coverage. 
+Smudgeplot was used to visualise the ploidy, estimate genome size and coverage. 
 
 ```
 while read p; do 
