@@ -11,7 +11,7 @@ trimmomatic PE -threads 2 -phred33 ${data}/${name}_R1.fastq.gz ${data}/${name}_R
 
 # Mapping with bwa to the reference genome
 Reads were mapped to the reference genome (CB_CbHevensen-1_hq-v2) using ```bwa mem v0.7.17```
-A an example command line was 
+An example command line was 
 ```
 bwa mem ${Ref} ${data}${name}_1.trim.fq.gz ${data}${name}_2.trim.fq.gz -M -R "@RG\tID:${name}\tSM:${name}\tPL:Illumina" -t ${proc} > ${TMPDIR}/${name}.sam
 ```
